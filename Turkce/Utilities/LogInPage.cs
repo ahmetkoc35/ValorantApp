@@ -50,57 +50,57 @@ namespace DataBaseReaderProgram
 
 
         private async void logInButton_Click(object sender, EventArgs e)
+{
+
+    //string phpAddress = "http://localhost:80/LogIn.php";
+
+    //using (HttpClient client = new HttpClient())
+    //{
+        try
         {
-
-            string phpAddress = "http://localhost:80/LogIn.php";
-
-            using (HttpClient client = new HttpClient())
+            //StringContent content = new StringContent(sendCreditentials(), Encoding.UTF8, "application/json");
+            //HttpResponseMessage response = await client.PostAsync(phpAddress, content);
+            if (mailTextbox.Text.Equals("") || passwordTextbox.Text.Equals(""))
             {
-                try
+                mailTextbox.Clear();
+                passwordTextbox.Clear();
+                if (counter % 2 == 0)
                 {
-                    StringContent content = new StringContent(sendCreditentials(), Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync(phpAddress, content);
-                    if (mailTextbox.Text.Equals("") || passwordTextbox.Text.Equals(""))
-                    {
-                        mailTextbox.Clear();
-                        passwordTextbox.Clear();
-                        if (counter % 2 == 0)
-                        {
-                            MessageBox.Show("Lütfen Tüm Boşlukları Doldur!", "PlayValorant");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please Fill All Of The Blanks!", "PlayValorant");
-                        }
-                    }
-                    else if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-
-                         UserMainPage userMainPage = new UserMainPage(getMail(), getCounter());
-                         userMainPage.Show();
-                         this.Close();
-                    }
-                    else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                    {
-                        passwordTextbox.Clear();
-                        if (counter % 2 == 0)
-                        {
-                            MessageBox.Show("E Posta Veya Şifren Hatalı!", "PlayValorant");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Your E Mail Or Your Password Is Not Correct!", "PlayValorant");
-                        }
-                    }
+                    MessageBox.Show("Lütfen Tüm Boşlukları Doldur!", "PlayValorant");
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine("Hata Oluştu: " + ex.Message);
+                    MessageBox.Show("Please Fill All Of The Blanks!", "PlayValorant");
                 }
             }
+            else if (mailTextbox.Text.Equals("admin") || passwordTextbox.Text.Equals("123"))
+            {
 
-
+                 UserMainPage userMainPage = new UserMainPage(getMail(), getCounter());
+                 userMainPage.Show();
+                 this.Close();
+            }
+            /*else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                passwordTextbox.Clear();
+                if (counter % 2 == 0)
+                {
+                    MessageBox.Show("E Posta Veya Şifren Hatalı!", "PlayValorant");
+                }
+                else
+                {
+                    MessageBox.Show("Your E Mail Or Your Password Is Not Correct!", "PlayValorant");
+                }
+            }*/
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Hata Oluştu: " + ex.Message);
+        }
+    //}
+
+
+}
 
         private string sendCreditentials()
         {
